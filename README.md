@@ -35,4 +35,4 @@ kathara connect pc1            # open a terminal on pc1
 kathara lclean                 # stop the lab
 ```
 
-The `lab4-*` labs use custom Docker images. Build them once with `./build-images.sh`, then start the lab with `./start-lab.sh`. Wireshark is on `http://localhost:3000`.
+The `lab4-dns-http` and `lab5-dns-http-routed` labs use custom Docker images. Build them once with `./build-images.sh`, then start the lab with `./start-lab.sh`. Wireshark is on `http://localhost:3000`.
