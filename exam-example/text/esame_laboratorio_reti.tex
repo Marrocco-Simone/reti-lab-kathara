@@ -1,0 +1,229 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{tikz}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{gray!10},
+    frame=single,
+    breaklines=true,
+    columns=fullflexible,
+    keepspaces=true,
+}
+
+\usetikzlibrary{positioning, arrows.meta}
+
+\setlength{\headheight}{14pt}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Esame Laboratorio Reti}
+\rhead{A.A. 2025/2026}
+\cfoot{Pagina \thepage\ di \pageref{LastPage}}
+
+\begin{document}
+
+\begin{center}
+    {\LARGE \textbf{Esame di Laboratorio di Reti}}\\[0.3cm]
+    {\large Anno Accademico 2025/2026}\\[0.3cm]
+    \rule{\textwidth}{0.4pt}
+\end{center}
+
+\vspace{0.3cm}
+
+\noindent
+\begin{tabular}{@{}ll}
+    \textbf{Nome e Cognome:} & \rule{8cm}{0.4pt} \\[0.3cm]
+    \textbf{Matricola:}      & \rule{4cm}{0.4pt} \\[0.3cm]
+    \textbf{Data:}           & 15 giugno 2026    \\
+\end{tabular}
+
+\vspace{0.5cm}
+
+\noindent
+\begin{minipage}[t]{0.5\textwidth}
+    \textbf{Durata:} 1 ora e 30 minuti
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+    \raggedleft
+    \begin{tabular}{|l|c|}
+        \hline
+        \textbf{Sezione}       & \textbf{Punti} \\
+        \hline
+        1. Configurazione rete & 2              \\
+        2. Routing             & 6              \\
+        3. Verifica            & 3              \\
+        4. DNS                 & 2              \\
+        \hline
+        \textbf{Totale}        & \textbf{13}    \\
+        \hline
+    \end{tabular}
+\end{minipage}
+
+\vspace{0.5cm}
+
+\section*{Scenario}
+
+Configurare una rete composta da \textbf{5 router} (R1--R5) e \textbf{3 PC} (PC1--PC3), oltre a un server DNS. I quattro router esterni (R1--R4) sono collegati ad \textbf{anello} e ognuno è inoltre connesso al router centrale \textbf{R5}. Le rotte statiche devono utilizzare i \textbf{percorsi a costo minimo}.
+
+\section*{Topologia}
+
+\begin{center}
+    \begin{tikzpicture}[
+            router/.style={circle, draw, thick, minimum size=0.9cm, font=\small\bfseries},
+            pc/.style={rectangle, draw, thick, minimum size=0.7cm, font=\small\bfseries},
+            weight/.style={font=\scriptsize, fill=white, inner sep=1pt}
+        ]
+
+        % Routers: ring corners + central hub
+        \node[router] (R1) at (0, 2.5) {R1};
+        \node[router] (R2) at (6, 2.5) {R2};
+        \node[router] (R3) at (6, -1.5) {R3};
+        \node[router] (R4) at (0, -1.5) {R4};
+        \node[router] (R5) at (3, 0.5) {R5};
+
+        % Hosts
+        \node[pc] (PC1) at (0, 4) {PC1};
+        \node[pc] (PC2) at (6, 4) {PC2};
+        \node[pc] (PC3) at (6, -3) {PC3};
+        \node[pc] (DNS) at (0, -3) {DNS};
+
+        % Host connections
+        \draw[thick] (PC1) -- node[left, font=\scriptsize] {A} (R1);
+        \draw[thick] (PC2) -- node[right, font=\scriptsize] {B} (R2);
+        \draw[thick] (PC3) -- node[right, font=\scriptsize] {C} (R3);
+        \draw[thick] (DNS) -- node[left, font=\scriptsize] {D} (R4);
+
+        % Ring links
+        \draw[thick] (R1) -- node[above, font=\scriptsize] {E} node[weight, below] {5} (R2);
+        \draw[thick] (R2) -- node[right, font=\scriptsize] {F} node[weight, left] {1} (R3);
+        \draw[thick] (R3) -- node[below, font=\scriptsize] {G} node[weight, above] {6} (R4);
+        \draw[thick] (R4) -- node[left, font=\scriptsize] {H} node[weight, right] {2} (R1);
+
+        % Spokes to hub R5
+        \draw[thick] (R1) -- node[weight, pos=0.5] {J} node[weight, pos=0.7, above] {1} (R5);
+        \draw[thick] (R2) -- node[weight, pos=0.5] {K} node[weight, pos=0.7, above] {3} (R5);
+        \draw[thick] (R3) -- node[weight, pos=0.5] {L} node[weight, pos=0.7, below] {1} (R5);
+        \draw[thick] (R4) -- node[weight, pos=0.5] {M} node[weight, pos=0.7, below] {2} (R5);
+
+    \end{tikzpicture}
+\end{center}
+
+\section*{Schema indirizzi}
+
+\begin{center}
+    \begin{tabular}{cllc}
+        \toprule
+        \textbf{Dominio} & \textbf{Subnet} & \textbf{Collegamento}    & \textbf{Peso} \\
+        \midrule
+        A                & 10.0.1.0/24     & PC1 $\leftrightarrow$ R1 & --            \\
+        B                & 10.0.2.0/24     & PC2 $\leftrightarrow$ R2 & --            \\
+        C                & 10.0.3.0/24     & PC3 $\leftrightarrow$ R3 & --            \\
+        D                & 10.0.4.0/24     & DNS $\leftrightarrow$ R4 & --            \\
+        E                & 10.0.5.0/24     & R1 $\leftrightarrow$ R2  & 5             \\
+        F                & 10.0.6.0/24     & R2 $\leftrightarrow$ R3  & 1             \\
+        G                & 10.0.7.0/24     & R3 $\leftrightarrow$ R4  & 6             \\
+        H                & 10.0.8.0/24     & R4 $\leftrightarrow$ R1  & 2             \\
+        J                & 10.0.9.0/24     & R5 $\leftrightarrow$ R1  & 1             \\
+        K                & 10.0.10.0/24    & R5 $\leftrightarrow$ R2  & 3             \\
+        L                & 10.0.11.0/24    & R5 $\leftrightarrow$ R3  & 1             \\
+        M                & 10.0.12.0/24    & R5 $\leftrightarrow$ R4  & 2             \\
+        \bottomrule
+    \end{tabular}
+\end{center}
+
+\section*{Consegne}
+
+\subsection*{1. Configurazione di rete [2 punti]}
+
+Scrivere il file \texttt{lab.conf} definendo tutte le macchine e i collision domain. Usare l'immagine \texttt{kathara/base}.
+
+\subsection*{2. Configurazione routing [6 punti]}
+
+Per ogni macchina, scrivere il file \texttt{.startup} con la configurazione degli indirizzi IP e le rotte statiche verso le sottoreti remote. I punti sono assegnati in base alla correttezza del funzionamento: tutti i PC e router devono poter comunicare tra loro.
+
+\subsection*{3. Verifica percorsi ottimali [3 punti]}
+
+Eseguire \texttt{traceroute} tra le coppie di PC e verificare che i percorsi siano ottimali (costo minimo).
+
+\subsection*{4. Integrazione DNS [2 punti]}
+
+Integrare il server DNS fornito (cartella \texttt{dns/}) collegandolo a R4 sul collision domain D con subnet 10.0.4.0/24.
+
+Il server DNS è preconfigurato con gli indirizzi IP corretti dei PC (vedasi sotto).
+
+Configurare i PC per utilizzare il DNS e verificare il funzionamento.
+
+\subsection*{Convenzioni di indirizzamento (OBBLIGATORIE)}
+
+
+\begin{itemize}
+    \item \textbf{PC e DNS}: indirizzo che termina in \texttt{.1}
+    \item \textbf{Router}: interfacce con indirizzo che termina in \texttt{.2} o \texttt{.3}
+    \item \textbf{Sottoreti}: tutte le sottoreti devono essere implementate e raggiungibili, anche se non usate nella comunicazione tra pc
+\end{itemize}
+
+\textbf{Esempi:}
+\begin{itemize}
+    \item PC1 su subnet A: \texttt{10.0.1.1}, R1 su subnet A: \texttt{10.0.1.2}
+    \item Su subnet E (R1$\leftrightarrow$R2): R1 usa \texttt{10.0.5.2}, R2 usa \texttt{10.0.5.3} (o viceversa)
+\end{itemize}
+
+\vfill
+
+\section*{Riferimento comandi}
+
+\textbf{Configurare un PC per usare il DNS} (da aggiungere nel .startup):
+\begin{lstlisting}
+echo "nameserver 10.0.4.1" > /etc/resolv.conf
+\end{lstlisting}
+
+\textbf{dns.startup}:
+\begin{lstlisting}
+ip address add 10.0.4.1/24 dev eth0
+ip link set eth0 up
+ip route add default via 10.0.4.2
+systemctl start named
+\end{lstlisting}
+
+\textbf{dns/etc/bind/named.conf}:
+\begin{lstlisting}
+options {
+    directory "/var/cache/bind";
+    recursion yes;
+    allow-query { any; };
+    dnssec-validation no;
+};
+
+zone "lab.local" {
+    type master;
+    file "/etc/bind/db.lab.local";
+};
+\end{lstlisting}
+
+\textbf{dns/etc/bind/db.lab.local}:
+\begin{lstlisting}
+$TTL    604800
+@   IN  SOA  dns.lab.local. admin.lab.local. (
+             1         ; Serial
+             604800    ; Refresh
+             86400     ; Retry
+             2419200   ; Expire
+             604800 )  ; Negative Cache TTL
+
+@              IN  NS  dns.lab.local.
+dns.lab.local. IN  A   10.0.4.1
+
+pc1            IN  A   10.0.1.1
+pc2            IN  A   10.0.2.1
+pc3            IN  A   10.0.3.1
+\end{lstlisting}
+
+\end{document}

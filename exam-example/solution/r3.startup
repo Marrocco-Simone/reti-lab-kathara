@@ -1,0 +1,32 @@
+ip address add 10.0.3.2/24 dev eth0   # C: R3 lato PC3
+ip link set eth0 up
+ip address add 10.0.6.3/24 dev eth1   # F: R2-R3, R3 usa .3 (ID alto)
+ip link set eth1 up
+ip address add 10.0.7.2/24 dev eth2   # G: R3-R4, R3 usa .2 (ID basso)
+ip link set eth2 up
+ip address add 10.0.11.2/24 dev eth3  # L: R5-R3, R3 usa .2 (ID basso)
+ip link set eth3 up
+
+# Subnet A (PC1): via R5 (costo 1+1=2)
+ip route add 10.0.1.0/24 via 10.0.11.3
+
+# Subnet B (PC2): via R2 (diretto F, costo 1)
+ip route add 10.0.2.0/24 via 10.0.6.2
+
+# Subnet D (DNS): via R5 (costo 1+2=3, meglio di R3-R4 diretto costo 6!)
+ip route add 10.0.4.0/24 via 10.0.11.3
+
+# Subnet E (R1-R2): via R2
+ip route add 10.0.5.0/24 via 10.0.6.2
+
+# Subnet H (R4-R1): via R5
+ip route add 10.0.8.0/24 via 10.0.11.3
+
+# Subnet J (R5-R1): via R5
+ip route add 10.0.9.0/24 via 10.0.11.3
+
+# Subnet K (R5-R2): via R2
+ip route add 10.0.10.0/24 via 10.0.6.2
+
+# Subnet M (R5-R4): via R5
+ip route add 10.0.12.0/24 via 10.0.11.3
