@@ -120,7 +120,7 @@ By the end of this tutorial, you will be able to:
 Navigate to the lab directory and start all containers:
 
 ```bash
-cd /tmp/reti-lab-kathara/lab4-dns-http-routed
+cd /tmp/reti-lab-kathara/lab5-dns-http-routed
 bash start-lab.sh
 ```
 

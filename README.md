@@ -23,9 +23,9 @@ On your own PC, install [Docker](https://www.docker.com/) and [Kathara](https://
 | `lab3-two-pcs`         | 3      | Two PCs in one collision domain, `ping`                                             |
 | `lab3-router`          | 3      | Two subnets connected by one router, default gateway                                |
 | `lab4-dns-http`        | 4      | DNS hierarchy, HTTP services and Wireshark, all in one subnet                       |
-| `lab4-dns-http-routed` | 4      | The same services, with the DNS domains in three subnets connected by three routers |
+| `lab5-dns-http-routed` | 5      | The same services, with the DNS domains in three subnets connected by three routers |
 
-The lesson 4 slides are in `lab4-dns-http/slides.pdf`.
+The slides are in `lab4-dns-http/slides.pdf` and `lab5-dns-http-routed/slides.pdf`.
 
 ## Commands
 
