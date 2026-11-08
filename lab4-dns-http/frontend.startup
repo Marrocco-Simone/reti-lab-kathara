@@ -1,0 +1,7 @@
+#!/bin/bash
+# Configure network
+ip address add 192.168.0.213/24 dev eth0
+
+# Start the frontend service (dependencies already installed in Docker image)
+cd /opt/frontend
+python3 -m uvicorn app.main:app --host 0.0.0.0 --port 80 &

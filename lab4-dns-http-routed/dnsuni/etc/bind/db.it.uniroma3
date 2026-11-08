@@ -1,0 +1,19 @@
+$TTL    60000
+@               IN      SOA     dnsuni.uniroma3.it.    root.dnsuni.uniroma3.it. (
+					2006031204 ; serial
+					28 ; refresh
+					14 ; retry
+					3600000 ; expire
+					0 ; negative cache ttl
+					)
+
+@						IN	NS	dnsuni.uniroma3.it.
+dnsuni.uniroma3.it.		IN	A	192.168.1.11
+
+pc1.uniroma3.it.		IN	A	192.168.1.111
+localuni.uniroma3.it.	IN	A	192.168.1.110
+
+; Service nodes for tutorial exercises (now in NET network)
+api.uniroma3.it.		IN	A	192.168.2.112
+frontend.uniroma3.it.	IN	A	192.168.2.113
+llm.uniroma3.it.		IN	A	192.168.2.114

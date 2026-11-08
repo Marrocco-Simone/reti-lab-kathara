@@ -1,0 +1,4 @@
+# PC2 - NET network (192.168.2.0/24)
+ip address add 192.168.2.222/24 dev eth0
+ip link set eth0 up
+route add default gw 192.168.2.100 dev eth0

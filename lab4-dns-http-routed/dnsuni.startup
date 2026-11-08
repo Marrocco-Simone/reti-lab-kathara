@@ -1,0 +1,5 @@
+# DNS uniroma3.it Server - IT network (192.168.1.0/24)
+ip address add 192.168.1.11/24 dev eth0
+ip link set eth0 up
+route add default gw 192.168.1.100 dev eth0
+systemctl start named

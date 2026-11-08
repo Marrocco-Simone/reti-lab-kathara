@@ -1,0 +1,17 @@
+# Router IT
+# eth0: IT network (192.168.1.0/24)
+# eth1: LINK_RI to R_ROOT (192.168.10.0/24)
+# eth2: LINK_IN to R_NET (192.168.20.0/24)
+
+ip addr add 192.168.1.100/24 dev eth0
+ip addr add 192.168.10.2/24 dev eth1
+ip addr add 192.168.20.1/24 dev eth2
+
+ip link set eth0 up
+ip link set eth1 up
+ip link set eth2 up
+
+# Routes to other networks
+ip route add 192.168.0.0/24 via 192.168.10.1   # ROOT network via R_ROOT
+ip route add 192.168.2.0/24 via 192.168.20.2   # NET network via R_NET
+ip route add 192.168.30.0/24 via 192.168.10.1  # LINK_RN via R_ROOT

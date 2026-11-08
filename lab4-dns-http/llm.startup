@@ -1,0 +1,13 @@
+#!/bin/bash
+# Configure network
+ip address add 192.168.0.214/24 dev eth0
+
+# Start Ollama service in background (model already pre-downloaded in Docker image)
+ollama serve &
+
+# Wait for Ollama to be ready
+sleep 5
+
+# Start the LLM API service (dependencies already installed in Docker image)
+cd /opt/llm
+python3 -m uvicorn app.main:app --host 0.0.0.0 --port 80 &

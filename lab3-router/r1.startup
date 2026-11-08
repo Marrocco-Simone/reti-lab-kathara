@@ -1,0 +1,4 @@
+ip a add 192.168.0.100/24 dev eth0
+ip link set eth0 up
+ip a add 192.168.1.100/24 dev eth1
+ip link set eth1 up
