@@ -579,20 +579,20 @@ python3 -m uvicorn app.main:app --host 0.0.0.0 --port 80 &
 The service containers use **custom pre-built Docker images** instead of the base `kathara/base` image:
 
 **Images:**
-- `dns-lab/api` - Backend API with Python + FastAPI pre-installed
-- `dns-lab/frontend` - Frontend with Python + FastAPI + httpx pre-installed
-- `dns-lab/llm` - LLM service with Python + FastAPI + Ollama + gemma3:270m model pre-installed
+- `ghcr.io/marrocco-simone/reti-lab-kathara:api` - Backend API with Python + FastAPI pre-installed
+- `ghcr.io/marrocco-simone/reti-lab-kathara:frontend` - Frontend with Python + FastAPI + httpx pre-installed
+- `ghcr.io/marrocco-simone/reti-lab-kathara:llm` - LLM service with Python + FastAPI + Ollama + gemma3:270m model pre-installed
 
 **How it works:**
-1. Before first lab use, run `bash build-images.sh` (takes ~15-20 minutes)
-2. Docker builds images with all dependencies and downloads LLM model
-3. Images are cached locally on your machine
-4. Lab startup uses pre-built images (starts in ~10 seconds)
+1. The GitHub workflow `.github/workflows/images.yml` builds the images and pushes them to `ghcr.io`
+2. At the first `kathara lstart`, Docker downloads the images (the `llm` image is about 1.3 GB)
+3. Later lab starts use the downloaded images (starts in ~10 seconds)
+4. To build the images on your PC instead, run `bash build-images.sh`, then use the commented `dns-lab/...` image lines in `lab.conf`
 
 **Lab.conf configuration:**
 ```
 api[0]="A"                  # Internal network interface
-api[image]="dns-lab/api"    # Custom pre-built image
+api[image]="ghcr.io/marrocco-simone/reti-lab-kathara:api"    # Custom pre-built image
 ```
 
 **Benefits:**

@@ -24,10 +24,9 @@ Sui PC del laboratorio lavoriamo nella cartella `/tmp`
 cd /tmp
 git clone https://github.com/Marrocco-Simone/reti-lab-kathara
 cd reti-lab-kathara/lab4-dns-http
-./build-images.sh
 ```
 
-`build-images.sh` crea le immagini Docker di `api`, `frontend` e `llm` (qualche minuto)
+Al primo `./start-lab.sh` Kathara scarica da `ghcr.io` le immagini Docker di `api`, `frontend` e `llm` (qualche minuto)
 
 **Attenzione**: `/tmp` viene cancellata allo spegnimento del PC. Copiate altrove i file che modificate!
 
@@ -51,7 +50,7 @@ pc1[0]="A" # pc1 è nel dominio A
 pc1[image]="kathara/base" # usa l'immagine docker di base
 
 frontend[0]="A" # frontend è nel dominio A
-frontend[image]="dns-lab/frontend" # usa un'immagine creata da build-images.sh
+frontend[image]="ghcr.io/marrocco-simone/reti-lab-kathara:frontend" # usa un'immagine scaricata da ghcr.io
 
 # wireshark
 wireshark[bridged]=true

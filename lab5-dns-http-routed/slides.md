@@ -22,8 +22,9 @@ title: DNS and HTTP with routers
 cd /tmp
 git clone https://github.com/Marrocco-Simone/reti-lab-kathara
 cd reti-lab-kathara/lab5-dns-http-routed
-./build-images.sh
 ```
+
+Al primo `./start-lab.sh` Kathara scarica da `ghcr.io` le immagini Docker di `api`, `frontend` e `llm` (qualche minuto)
 
 **Attenzione**: `/tmp` viene cancellata allo spegnimento del PC. Copiate altrove i file che modificate!
 

@@ -31,23 +31,15 @@ This lab demonstrates a hierarchical DNS system with practical service examples,
 
 ## Quick Start
 
-### 1. Build Docker Images (First Time Only)
+### 1. Docker Images
 
-Before starting the lab for the first time, build the custom Docker images:
+The lab uses three images with all dependencies pre-installed. Kathara downloads them from `ghcr.io` at the first start:
 
-```bash
-bash build-images.sh
-```
+- `ghcr.io/marrocco-simone/reti-lab-kathara:api` - Backend API with FastAPI
+- `ghcr.io/marrocco-simone/reti-lab-kathara:frontend` - Frontend service with FastAPI + httpx
+- `ghcr.io/marrocco-simone/reti-lab-kathara:llm` - LLM service with Ollama + FastAPI + gemma3:270m model
 
-This will build three optimized images with all dependencies pre-installed:
-
-- `dns-lab/api` - Backend API with FastAPI
-- `dns-lab/frontend` - Frontend service with FastAPI + httpx
-- `dns-lab/llm` - LLM service with Ollama + FastAPI + gemma3:270m model
-
-**Build time**: ~15-20 minutes (includes downloading the ~500MB LLM model)
-
-**Note**: This step only needs to be done once (or when updating service code). The images will be cached locally.
+To build the images on your PC instead, run `bash build-images.sh` (~15-20 minutes). Then use the commented `dns-lab/...` image lines in `lab.conf`.
 
 ### 2. Start the Lab
 

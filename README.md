@@ -35,4 +35,4 @@ kathara connect pc1            # open a terminal on pc1
 kathara lclean                 # stop the lab
 ```
 
-The `lab4-dns-http` and `lab5-dns-http-routed` labs use custom Docker images. Build them once with `./build-images.sh`, then start the lab with `./start-lab.sh`. Wireshark is on `http://localhost:3000`.
+The `lab4-dns-http` and `lab5-dns-http-routed` labs use the `api`, `frontend` and `llm` images from `ghcr.io/marrocco-simone/reti-lab-kathara`. The GitHub workflow `.github/workflows/images.yml` builds them from `lab4-dns-http`. Kathara downloads them the first time you run `./start-lab.sh`. Wireshark is on `http://localhost:3000`.

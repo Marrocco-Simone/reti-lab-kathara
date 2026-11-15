@@ -66,11 +66,9 @@ This lab demonstrates a hierarchical DNS system separated into different collisi
 
 ## Quick Start
 
-### 1. Build Docker Images (First Time Only)
+### 1. Docker Images
 
-```bash
-bash build-images.sh
-```
+Kathara downloads the `api`, `frontend` and `llm` images from `ghcr.io` at the first start. To build them on your PC instead, run `bash build-images.sh`, then use the commented `dns-lab/...` image lines in `lab.conf`.
 
 ### 2. Start the Lab
 

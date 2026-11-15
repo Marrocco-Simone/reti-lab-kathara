@@ -6,8 +6,9 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Install Ollama
-RUN curl -fsSL https://ollama.com/install.sh | sh
+# Install Ollama without the GPU libraries, the containers run on CPU only
+RUN curl -fsSL https://ollama.com/install.sh | sh && \
+    rm -rf /usr/local/lib/ollama/cuda_* /usr/local/lib/ollama/rocm*
 
 # Install Python packages
 COPY requirements.txt /tmp/
