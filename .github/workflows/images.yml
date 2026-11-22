@@ -7,6 +7,7 @@ on:
       - "lab4-dns-http/api/**"
       - "lab4-dns-http/frontend/**"
       - "lab4-dns-http/llm/**"
+      - "images/dhcp/**"
       - ".github/workflows/images.yml"
   workflow_dispatch:
 
@@ -19,7 +20,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        service: [api, frontend, llm]
+        include:
+          - { service: api, context: lab4-dns-http/api }
+          - { service: frontend, context: lab4-dns-http/frontend }
+          - { service: llm, context: lab4-dns-http/llm }
+          - { service: dhcp, context: images/dhcp }
     steps:
       - uses: actions/checkout@v4
       - uses: docker/setup-qemu-action@v3
@@ -31,7 +36,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - uses: docker/build-push-action@v6
         with:
-          context: lab4-dns-http/${{ matrix.service }}
+          context: ${{ matrix.context }}
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ghcr.io/marrocco-simone/reti-lab-kathara:${{ matrix.service }}
