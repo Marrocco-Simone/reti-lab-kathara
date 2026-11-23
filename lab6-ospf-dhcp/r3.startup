@@ -1,0 +1,9 @@
+# Router r3
+# eth0: LINK_1_3 (to r1)
+# eth1: LINK_3_4 (to r4)
+# eth2: LINK_3_NET (to r_net)
+ip address add 10.0.5.2/24 dev eth0
+ip address add 10.0.7.1/24 dev eth1
+ip address add 10.0.8.1/24 dev eth2
+
+# TODO: start FRR

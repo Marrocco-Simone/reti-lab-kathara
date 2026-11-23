@@ -24,8 +24,10 @@ On your own PC, install [Docker](https://www.docker.com/) and [Kathara](https://
 | `lab3-router`          | 3      | Two subnets connected by one router, default gateway                                |
 | `lab4-dns-http`        | 4      | DNS hierarchy, HTTP services and Wireshark, all in one subnet                       |
 | `lab5-dns-http-routed` | 5      | The same services, with the DNS domains in three subnets connected by three routers |
+| `lab6-ospf-dhcp`       | 6      | The same LANs with 8 routers: OSPF routing, DHCP for pc1, link and router failures |
+| `lab6-ospf-dhcp-solution` | 6   | The solution of `lab6-ospf-dhcp`                                                    |
 
-The slides are in `lab4-dns-http/slides.pdf` and `lab5-dns-http-routed/slides.pdf`.
+The slides are in `lab4-dns-http/slides.pdf`, `lab5-dns-http-routed/slides.pdf` and `lab6-ospf-dhcp/slides.pdf`.
 
 ## Commands
 
@@ -35,4 +37,4 @@ kathara connect pc1            # open a terminal on pc1
 kathara lclean                 # stop the lab
 ```
 
-The `lab4-dns-http` and `lab5-dns-http-routed` labs use the `api`, `frontend` and `llm` images from `ghcr.io/marrocco-simone/reti-lab-kathara`. The GitHub workflow `.github/workflows/images.yml` builds them from `lab4-dns-http`. Kathara downloads them the first time you run `./start-lab.sh`. Wireshark is on `http://localhost:3000`.
+The labs from `lab4-dns-http` on use the `api`, `frontend` and `llm` images from `ghcr.io/marrocco-simone/reti-lab-kathara`, and `lab6-ospf-dhcp` and `lab6-ospf-dhcp-solution` also use the `dhcp` image. The GitHub workflow `.github/workflows/images.yml` builds them from `lab4-dns-http` and `images/dhcp`. Kathara downloads them the first time you run `./start-lab.sh`. Wireshark is on `http://localhost:3000`.

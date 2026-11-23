@@ -1,0 +1,11 @@
+# Router r1
+# eth0: LINK_ROOT_1 (to r_root)
+# eth1: LINK_IT_1 (to r_it)
+# eth2: LINK_1_2 (to r2)
+# eth3: LINK_1_3 (to r3)
+ip address add 10.0.1.2/24 dev eth0
+ip address add 10.0.2.2/24 dev eth1
+ip address add 10.0.4.1/24 dev eth2
+ip address add 10.0.5.1/24 dev eth3
+
+systemctl start frr

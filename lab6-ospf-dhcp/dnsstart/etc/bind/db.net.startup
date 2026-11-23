@@ -1,0 +1,17 @@
+$TTL 60000
+@               IN      SOA     dnsstart.startup.net.    root.dnsstart.startup.net. (
+                        2006031202 ; serial
+                        28 ; refresh
+                        14400 ; retry
+                        3600000 ; expire
+                        15 ; negative cache ttl
+                        )
+@                          IN      	NS      	dnsstart.startup.net.
+dnsstart.startup.net.      IN      	A       	192.168.2.22
+pc2.startup.net.		   IN		A		192.168.2.222
+localstart.startup.net.	   IN		A		192.168.2.220
+
+; Service nodes for tutorial exercises
+api.startup.net.		   IN		A		192.168.2.112
+frontend.startup.net.	   IN		A		192.168.2.113
+llm.startup.net.		   IN		A		192.168.2.114
