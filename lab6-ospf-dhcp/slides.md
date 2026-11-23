@@ -255,14 +255,40 @@ File da creare: `dhcp_it_2/etc/dhcp/dhcpd.conf` (pool `192.168.1.175 - 192.168.1
 
 ---
 
+## Un indirizzo già occupato
+
+<style scoped>section{font-size:30px}</style>
+
+Nuovo PC con IP **statico** `192.168.1.150`: il primo indirizzo del pool di `dhcp_it_1`
+
+```conf
+# lab.conf
+pc10[0]="IT"
+pc10[image]="kathara/base"
+```
+
+```bash
+# pc10.startup
+ip address add 192.168.1.150/24 dev eth0
+ip link set eth0 up
+route add default gw 192.168.1.100 dev eth0
+```
+
+Prima di una Offer, `dhcp_it_1` fa un **ping** all'indirizzo. pc10 risponde: `.150` diventa `abandoned` e il server offre `.151`
+
+---
+
 ## Esercizio 1: DHCP
+
+<style scoped>section{font-size:30px}</style>
 
 1. Completate `dhcp_it_1/etc/dhcp/dhcpd.conf` (i commenti nel file vi dicono i valori)
 2. Avviate il servizio in `dhcp_it_1.startup`
 3. Mettete `dhclient eth0` in `pc1.startup`
 4. Riavviate il lab e controllate `ip addr`, `ip route` e `/etc/resolv.conf` su pc1
-5. Create `dhcp_it_2` come nella slide precedente e riavviate il lab
+5. Create `dhcp_it_2` (slide "Creare `dhcp_it_2`") e riavviate il lab
 6. Su pc1: `dhclient -r eth0` e `dhclient -v eth0`. Su Wireshark, interfaccia **eth2** (rete IT), filtro `dhcp`: trovate le due Offer
+7. Aggiungete `pc10` (slide precedente) e riavviate il lab. Quale indirizzo offre `dhcp_it_1` a pc1? Su `dhcp_it_1`: `cat /var/lib/dhcp/dhcpd.leases`
 
 ---
 
